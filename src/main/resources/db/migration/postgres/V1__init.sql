@@ -1,0 +1,58 @@
+--CREATE SCHEMA IF NOT EXISTS base;
+--
+--create table base.configuration
+--(
+--    id          bigserial          not null
+--        constraint config_pkey
+--            primary key,
+--    name        varchar(30) unique not null,
+--    value       varchar(100)       not null,
+--    type        varchar(30)        not null,
+--    label       varchar(50)        not null,
+--    environment varchar(30)        not null,
+--    created_at  timestamp          not null default Now(),
+--    created_by  int                not null,
+--    updated_at  timestamp,
+--    updated_by  int,
+--    deleted     boolean                     default false,
+--    deleted_at  timestamp,
+--    deleted_by  int
+--);
+--
+--create table base.system_user
+--(
+--    id          bigserial           not null
+--        constraint system_user_pkey
+--            primary key,
+--    username    varchar(200) unique not null,
+--    password    bytea               not null,
+--    app_key     bytea               not null,
+--    description varchar(200)        not null,
+--    environment varchar(30)         not null,
+--    created_at  timestamp           not null default Now(),
+--    created_by  int                 not null,
+--    updated_at  timestamp,
+--    updated_by  int,
+--    deleted     boolean                      default false,
+--    deleted_at  timestamp,
+--    deleted_by  int
+--);
+--create unique index system_user_id_uindex
+--    on base.system_user (id);
+--
+--create table base.response_code
+--(
+--    id         bigserial           not null
+--        constraint response_code_id_pk primary key,
+--    name       varchar(100) unique not null,
+--    code       varchar(50)         not null,
+--    message    varchar(500)        not null,
+--    created_at timestamp           not null default Now(),
+--    created_by int                 not null,
+--    updated_at timestamp,
+--    updated_by int,
+--    deleted    boolean                      default false,
+--    deleted_at timestamp,
+--    deleted_by int
+--);
+--create unique index response_code_id_uindex on base.response_code (id);

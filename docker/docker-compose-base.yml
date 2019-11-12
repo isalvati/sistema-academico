@@ -1,0 +1,16 @@
+version: "3"
+services:
+  db:
+    image: "postgres:10.10"
+    container_name: "base"
+    ports:
+      - "5440:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=db_sistema_academico
+      - TZ=UTC
+    volumes:
+      - dbdata:/var/lib/postgresql/data_base
+volumes:
+  dbdata:
