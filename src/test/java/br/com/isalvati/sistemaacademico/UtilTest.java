@@ -17,7 +17,7 @@ public class UtilTest {
         usr.setAppKey(salt);
         byte[] pass = Passwords.hash(("123").toCharArray(), salt);
         usr.setPassword(pass);
-        usr.setUsername("SA_ADMIN");
+        usr.setUsername("SA-ADMIN");
         usr.setCreatedBy(0L);
         return usr;
     }

@@ -32,6 +32,8 @@ public class SystemUserEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Environment environment;
 
+
+
     public Long getId() {
         return id;
     }

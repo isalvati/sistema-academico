@@ -39,7 +39,7 @@ public class SystemUserEntityServiceTest {
     @Transactional
     public void findByUsername() throws BaseException {
         systemUserService.save(systemUser);
-        SystemUserEntity user = systemUserService.findByUsername("SA_ADMIN");
+        SystemUserEntity user = systemUserService.findByUsername("SA-ADMIN");
         Assert.assertNotNull(user);
     }
 
@@ -49,7 +49,7 @@ public class SystemUserEntityServiceTest {
         SystemUserEntity usr = systemUserService.save(systemUser);
         Assert.assertNotNull(usr);
 
-        System.out.println(" INSERT INTO pp.system_user (username, password, app_key, description, environment)\n" +
+        System.out.println(" INSERT INTO academico.system_user (username, password, app_key, description, environment)\n" +
                 "VALUES ('" + usr.getUsername() + "', " +
                 "    decode('" + bytesToHex(usr.getPassword()) + "', 'hex'),\n" +
                 "    decode('" + bytesToHex(usr.getAppKey()) + "',  'hex'),\n" +
