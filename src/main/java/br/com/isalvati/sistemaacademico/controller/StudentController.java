@@ -1,5 +1,6 @@
 package br.com.isalvati.sistemaacademico.controller;
 
+import br.com.isalvati.sistemaacademico.dto.student.StudentRegisterResponse;
 import br.com.isalvati.sistemaacademico.dto.student.StudentRequest;
 import br.com.isalvati.sistemaacademico.entities.StudentEntity;
 import br.com.isalvati.sistemaacademico.exception.SistemaAcademicoException;
@@ -24,7 +25,7 @@ public class StudentController {
     @PostMapping("register")
     public ResponseEntity<Object> registerStudent(@Valid @RequestBody StudentRequest studentRequest,
                                                   HttpServletRequest request) throws SistemaAcademicoException {
-        StudentEntity response = service.registerStudent(studentRequest);
+        StudentRegisterResponse response = service.registerStudent(studentRequest);
         return ResponseEntity.ok(response);
     }
 

@@ -21,13 +21,13 @@ public class SystemUserService extends BaseService<SystemUserEntity> {
         return systemUserRepository.findByUsername(username);
     }
 
-    public SystemUserEntity buildSystemUser(String username, UserProfile profile) {
+    public SystemUserEntity buildSystemUser(String username, UserProfile profile, String password) {
         SystemUserEntity usr = new SystemUserEntity();
         usr.setDescription("");
         usr.setEnvironment(Environment.DEV);
         byte[] salt = Passwords.getNextSalt();
         usr.setAppKey(salt);
-        byte[] pass = Passwords.hash(("123").toCharArray(), salt);
+        byte[] pass = Passwords.hash((password).toCharArray(), salt);
         usr.setPassword(pass);
         usr.setUsername(username);
         usr.setProfile(profile);

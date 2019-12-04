@@ -15,7 +15,7 @@ import java.io.IOException;
 public class ExceptionHandlers extends DefaultHandlerExceptionResolver {
 
     @ExceptionHandler(SistemaAcademicoException.class)
-    public void handlePocketParrotException(
+    public void handleSistemaAcademicoException(
             SistemaAcademicoException ex,
             HttpServletRequest request,
             HttpServletResponse response,

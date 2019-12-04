@@ -117,7 +117,7 @@
         <appender-ref ref="console"/>
     </root>
 
-    <logger name="br.org.pocketparrot" additivity="false" level="TRACE">
+    <logger name="br.com.isalvati.sistemaacademico" additivity="false" level="TRACE">
         <appender-ref ref="console"/>
         <appender-ref ref="fileError"/>
         <appender-ref ref="fileDebug"/>
