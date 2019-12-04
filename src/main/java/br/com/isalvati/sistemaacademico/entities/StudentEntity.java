@@ -1,8 +1,5 @@
 package br.com.isalvati.sistemaacademico.entities;
 
-import br.com.isalvati.sistemaacademico.dto.user.SystemUser;
-import br.com.isalvati.sistemaacademico.type.UserProfile;
-
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -22,9 +19,17 @@ public class StudentEntity extends BaseEntity {
     @Column(name = "birthdate", nullable = false)
     private String birthdate;
 
-    @Column(name = "profile")
-    @Enumerated(EnumType.STRING)
-    private UserProfile profile;
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Column(name = "phone", nullable = false)
+    private String phone;
+
+    @Column(name = "address", nullable = false)
+    private String address;
+
+    @Column(name = "course", nullable = false)
+    private String course;
 
     @OneToOne(fetch = FetchType.EAGER)
     private SystemUserEntity systemUser;
@@ -63,12 +68,36 @@ public class StudentEntity extends BaseEntity {
         this.birthdate = birthdate;
     }
 
-    public UserProfile getProfile() {
-        return profile;
+    public String getEmail() {
+        return email;
     }
 
-    public void setProfile(UserProfile profile) {
-        this.profile = profile;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
     }
 
     public SystemUserEntity getSystemUser() {
@@ -89,12 +118,30 @@ public class StudentEntity extends BaseEntity {
                 Objects.equals(name, that.name) &&
                 Objects.equals(document, that.document) &&
                 Objects.equals(birthdate, that.birthdate) &&
-                profile == that.profile &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(phone, that.phone) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(course, that.course) &&
                 Objects.equals(systemUser, that.systemUser);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), id, name, document, birthdate, profile, systemUser);
+        return Objects.hash(super.hashCode(), id, name, document, birthdate, email, phone, address, course, systemUser);
+    }
+
+    @Override
+    public String toString() {
+        return "StudentEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", document='" + document + '\'' +
+                ", birthdate='" + birthdate + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", course='" + course + '\'' +
+                ", systemUser=" + systemUser +
+                '}';
     }
 }

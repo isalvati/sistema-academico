@@ -1,6 +1,7 @@
 package br.com.isalvati.sistemaacademico.entities;
 
 import br.com.isalvati.sistemaacademico.type.Environment;
+import br.com.isalvati.sistemaacademico.type.UserProfile;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -32,7 +33,9 @@ public class SystemUserEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Environment environment;
 
-
+    @Column(name = "profile")
+    @Enumerated(EnumType.STRING)
+    private UserProfile profile;
 
     public Long getId() {
         return id;
@@ -82,36 +85,48 @@ public class SystemUserEntity extends BaseEntity {
         this.environment = environment;
     }
 
+    public UserProfile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(UserProfile profile) {
+        this.profile = profile;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         SystemUserEntity that = (SystemUserEntity) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(username, that.username) &&
                 Arrays.equals(password, that.password) &&
                 Arrays.equals(appKey, that.appKey) &&
                 Objects.equals(description, that.description) &&
-                environment == that.environment;
+                environment == that.environment &&
+                profile == that.profile;
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, username, description, environment);
+        int result = Objects.hash(super.hashCode(), id, username, description, environment, profile);
         result = 31 * result + Arrays.hashCode(password);
         result = 31 * result + Arrays.hashCode(appKey);
         return result;
     }
 
     @Override
-    public String toString() {
-        return "SystemUser{" +
+    public String
+    toString() {
+        return "SystemUserEntity{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password=" + Arrays.toString(password) +
                 ", appKey=" + Arrays.toString(appKey) +
                 ", description='" + description + '\'' +
                 ", environment=" + environment +
+                ", profile=" + profile +
                 '}';
     }
 }
