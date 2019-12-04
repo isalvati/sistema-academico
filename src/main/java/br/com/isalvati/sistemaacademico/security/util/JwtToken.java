@@ -66,7 +66,7 @@ public class JwtToken {
      * Chave de criptografia do jwt
      *
      */
-    private String NAME_SYSTEM = "PP_ADMIN";
+    private String USER_PROFILE = "PROFILE";
 
     /**
      * Logger.
@@ -90,7 +90,7 @@ public class JwtToken {
         claims.put(CLAIM_KEY_CREATED, new Date());
         claims.put(ID_CLAIM, systemUser.getId());
         claims.put(AUDIENCE, systemUser.getUsername());
-        claims.put(ISSUER, NAME_SYSTEM);
+        claims.put(ISSUER, systemUser.getProfile());
         return createToken(claims);
     }
 
