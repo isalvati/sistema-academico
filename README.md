@@ -38,4 +38,6 @@ Liga o contaniner
 
 `docker exec -it <CONTAINER ID> psql -U base db_sistema_academico PGPASSWORD='admin'`
 
+#### Script sql para inserir usuário SA-ADMIN senha 123:
 
+`INSERT INTO academico.system_user (username, password, app_key, description, environment) VALUES ('SA-ADMIN', E'\\x5D2F1BF51FB95409E191356605BBD1636ACF3BBA4DF93E9DD780E95EAD169C8A', E'\\xB32B71705B0ADD0B9916A2A3585A3B10', 'Usuario ADMIN', 'DEV');`
