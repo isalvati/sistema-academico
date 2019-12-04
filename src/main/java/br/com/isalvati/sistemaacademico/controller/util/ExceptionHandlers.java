@@ -1,6 +1,6 @@
 package br.com.isalvati.sistemaacademico.controller.util;
 
-import br.com.isalvati.sistemaacademico.exception.BaseException;
+import br.com.isalvati.sistemaacademico.exception.SistemaAcademicoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -14,9 +14,9 @@ import java.io.IOException;
 @RestControllerAdvice
 public class ExceptionHandlers extends DefaultHandlerExceptionResolver {
 
-    @ExceptionHandler(BaseException.class)
+    @ExceptionHandler(SistemaAcademicoException.class)
     public void handlePocketParrotException(
-            BaseException ex,
+            SistemaAcademicoException ex,
             HttpServletRequest request,
             HttpServletResponse response,
             Object handler

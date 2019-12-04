@@ -3,7 +3,7 @@ package br.com.isalvati.sistemaacademico.services;
 import br.com.isalvati.sistemaacademico.PostgresqlContainer;
 import br.com.isalvati.sistemaacademico.UtilTest;
 import br.com.isalvati.sistemaacademico.entities.SystemUserEntity;
-import br.com.isalvati.sistemaacademico.exception.BaseException;
+import br.com.isalvati.sistemaacademico.exception.SistemaAcademicoException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -37,7 +37,7 @@ public class SystemUserEntityServiceTest {
 
     @Test
     @Transactional
-    public void findByUsername() throws BaseException {
+    public void findByUsername() throws SistemaAcademicoException {
         systemUserService.save(systemUser);
         SystemUserEntity user = systemUserService.findByUsername("SA-ADMIN");
         Assert.assertNotNull(user);
@@ -45,7 +45,7 @@ public class SystemUserEntityServiceTest {
 
     @Test
     @Transactional
-    public void create() throws BaseException {
+    public void create() throws SistemaAcademicoException {
         SystemUserEntity usr = systemUserService.save(systemUser);
         Assert.assertNotNull(usr);
 

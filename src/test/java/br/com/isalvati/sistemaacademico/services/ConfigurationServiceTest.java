@@ -2,7 +2,7 @@ package br.com.isalvati.sistemaacademico.services;
 
 import br.com.isalvati.sistemaacademico.PostgresqlContainer;
 import br.com.isalvati.sistemaacademico.UtilTest;
-import br.com.isalvati.sistemaacademico.exception.BaseException;
+import br.com.isalvati.sistemaacademico.exception.SistemaAcademicoException;
 import br.com.isalvati.sistemaacademico.entities.ConfigurationEntity;
 import br.com.isalvati.sistemaacademico.type.ConfigurationName;
 import br.com.isalvati.sistemaacademico.type.Environment;
@@ -31,7 +31,7 @@ public class ConfigurationServiceTest {
     private ConfigurationService configurationService;
 
     @Before
-    public void setUp() throws BaseException {
+    public void setUp() throws SistemaAcademicoException {
         ConfigurationEntity config = UtilTest.createConfig();
         configurationService.save(config);
     }

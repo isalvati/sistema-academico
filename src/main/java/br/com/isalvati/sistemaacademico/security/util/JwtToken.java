@@ -1,7 +1,7 @@
 package br.com.isalvati.sistemaacademico.security.util;
 
 import br.com.isalvati.sistemaacademico.entities.SystemUserEntity;
-import br.com.isalvati.sistemaacademico.exception.BaseException;
+import br.com.isalvati.sistemaacademico.exception.SistemaAcademicoException;
 import br.com.isalvati.sistemaacademico.services.SystemUserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -79,11 +79,11 @@ public class JwtToken {
      * @param user
      * @return String
      */
-    public String obterToken(User user) throws BaseException {
+    public String obterToken(User user) throws SistemaAcademicoException {
         SystemUserEntity systemUser = systemUserService.findByUsername(user.getUsername());
         if (StringUtils.isEmpty(systemUser)) {
             log.error("Erro ao buscar informacoes de usuario");
-            throw new BaseException("Erro ao buscar informacoes de usuario");
+            throw new SistemaAcademicoException("Erro ao buscar informacoes de usuario");
         }
         Map<String, Object> claims = new HashMap<>();
         claims.put(CLAIM_USERNAME, systemUser.getUsername());

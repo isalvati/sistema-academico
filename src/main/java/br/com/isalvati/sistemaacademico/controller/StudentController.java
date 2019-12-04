@@ -2,7 +2,7 @@ package br.com.isalvati.sistemaacademico.controller;
 
 import br.com.isalvati.sistemaacademico.dto.student.StudentRequest;
 import br.com.isalvati.sistemaacademico.entities.StudentEntity;
-import br.com.isalvati.sistemaacademico.exception.BaseException;
+import br.com.isalvati.sistemaacademico.exception.SistemaAcademicoException;
 import br.com.isalvati.sistemaacademico.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<Object> registerStudent(@Valid @RequestBody StudentRequest studentRequest,
-                                                  HttpServletRequest request) throws BaseException {
+                                                  HttpServletRequest request) throws SistemaAcademicoException {
         StudentEntity response = service.registerStudent(studentRequest);
         return ResponseEntity.ok(response);
     }

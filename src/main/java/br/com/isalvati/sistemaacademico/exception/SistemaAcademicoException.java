@@ -1,16 +1,16 @@
 package br.com.isalvati.sistemaacademico.exception;
 
-public class BaseException extends Exception {
+public class SistemaAcademicoException extends Exception {
 
     private ErrorCode code;
 
-    public BaseException(ErrorCode code) {
+    public SistemaAcademicoException(ErrorCode code) {
         super(code.getName());
         this.code = code;
     }
 
     @Deprecated
-    public BaseException(String exception) {
+    public SistemaAcademicoException(String exception) {
         super(exception);
     }
 

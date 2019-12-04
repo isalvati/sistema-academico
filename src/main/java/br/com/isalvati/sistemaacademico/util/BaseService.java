@@ -1,6 +1,6 @@
 package br.com.isalvati.sistemaacademico.util;
 
-import br.com.isalvati.sistemaacademico.exception.BaseException;
+import br.com.isalvati.sistemaacademico.exception.SistemaAcademicoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -39,11 +39,11 @@ public abstract class BaseService<T> {
         return repository.findById(id);
     }
 
-    public T save(T entity) throws BaseException {
+    public T save(T entity) throws SistemaAcademicoException {
         try {
             return repository.save(entity);
         } catch (Exception e) {
-            throw new BaseException(e.getMessage());
+            throw new SistemaAcademicoException(e.getMessage());
         }
     }
 

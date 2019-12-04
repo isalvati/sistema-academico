@@ -2,7 +2,7 @@ package br.com.isalvati.sistemaacademico.security.util;
 
 import br.com.isalvati.sistemaacademico.PostgresqlContainer;
 import br.com.isalvati.sistemaacademico.UtilTest;
-import br.com.isalvati.sistemaacademico.exception.BaseException;
+import br.com.isalvati.sistemaacademico.exception.SistemaAcademicoException;
 import br.com.isalvati.sistemaacademico.services.SystemUserService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -42,7 +42,7 @@ public class JwtTokenTest {
 
     @Test
     @Transactional
-    public void obterToken() throws BaseException {
+    public void obterToken() throws SistemaAcademicoException {
         System.out.println(token);
         Assert.assertTrue(jwtToken.validToken(token));
     }
