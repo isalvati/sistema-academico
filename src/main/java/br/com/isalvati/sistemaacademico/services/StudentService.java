@@ -4,6 +4,7 @@ import br.com.isalvati.sistemaacademico.dto.student.StudentRequest;
 import br.com.isalvati.sistemaacademico.dto.user.SystemUser;
 import br.com.isalvati.sistemaacademico.entities.StudentEntity;
 import br.com.isalvati.sistemaacademico.entities.SystemUserEntity;
+import br.com.isalvati.sistemaacademico.exception.BaseException;
 import br.com.isalvati.sistemaacademico.repositories.StudentRepository;
 import br.com.isalvati.sistemaacademico.type.UserProfile;
 import br.com.isalvati.sistemaacademico.util.BaseService;
@@ -15,23 +16,22 @@ public class StudentService extends BaseService<StudentEntity> {
 
     private final StudentRepository studentRepository;
 
-    public StudentService(StudentRepository studentRepository) {
+    private final SystemUserService systemUserService;
+
+    public StudentService(StudentRepository studentRepository, SystemUserService systemUserService) {
         this.studentRepository = studentRepository;
+        this.systemUserService = systemUserService;
     }
 
-    public StudentEntity registerStudent(StudentRequest request){
-        StudentEntity student = new StudentEntity();
+    public StudentEntity registerStudent(StudentRequest request) throws BaseException {
         ModelMapper mapper = new ModelMapper();
-        student = mapper.map(request, StudentEntity.class);
-        student.setProfile(UserProfile.STUDENT);
-        // TODO: criar system user para estudante
-        SystemUserEntity user = new SystemUserEntity();
-        user.setId(1L);
-        // FIM TO DO
+        StudentEntity student = mapper.map(request, StudentEntity.class);
+
+        SystemUserEntity user = systemUserService.buildSystemUser(student.getEmail(), UserProfile.STUDENT);
+        systemUserService.save(user);
 
         student.setSystemUser(user);
-        studentRepository.save(student);
+        save(student);
         return student;
-
     }
 }

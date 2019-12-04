@@ -7,6 +7,10 @@ public class StudentRequest {
     private String name;
     private String document;
     private String birthdate;
+    private String email;
+    private String phone;
+    private String address;
+    private String course;
 
     public String getName() {
         return name;
@@ -32,6 +36,38 @@ public class StudentRequest {
         this.birthdate = birthdate;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -39,11 +75,28 @@ public class StudentRequest {
         StudentRequest that = (StudentRequest) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(document, that.document) &&
-                Objects.equals(birthdate, that.birthdate);
+                Objects.equals(birthdate, that.birthdate) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(phone, that.phone) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(course, that.course);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, document, birthdate);
+        return Objects.hash(name, document, birthdate, email, phone, address, course);
+    }
+
+    @Override
+    public String toString() {
+        return "StudentRequest{" +
+                "name='" + name + '\'' +
+                ", document='" + document + '\'' +
+                ", birthdate='" + birthdate + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", course='" + course + '\'' +
+                '}';
     }
 }

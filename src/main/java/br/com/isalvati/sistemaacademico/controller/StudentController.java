@@ -21,7 +21,7 @@ public class StudentController {
     @Autowired
     private StudentService service;
 
-    @PostMapping
+    @PostMapping("register")
     public ResponseEntity<Object> registerStudent(@Valid @RequestBody StudentRequest studentRequest,
                                                   HttpServletRequest request) throws SistemaAcademicoException {
         StudentEntity response = service.registerStudent(studentRequest);
