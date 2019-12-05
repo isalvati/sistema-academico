@@ -1,14 +1,17 @@
 package br.com.isalvati.sistemaacademico.controller;
 
+import br.com.isalvati.sistemaacademico.dto.student.StudentConsultResponse;
 import br.com.isalvati.sistemaacademico.dto.student.StudentRegisterResponse;
 import br.com.isalvati.sistemaacademico.dto.student.StudentRequest;
 import br.com.isalvati.sistemaacademico.dto.student.StudentUpdateRequest;
 import br.com.isalvati.sistemaacademico.entities.StudentEntity;
 import br.com.isalvati.sistemaacademico.entities.SystemUserEntity;
+import br.com.isalvati.sistemaacademico.exception.ForbiddenException;
 import br.com.isalvati.sistemaacademico.exception.SistemaAcademicoException;
 import br.com.isalvati.sistemaacademico.services.StudentService;
 import br.com.isalvati.sistemaacademico.services.SystemUserService;
 import br.com.isalvati.sistemaacademico.type.UserProfile;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +36,7 @@ public class StudentController extends BaseController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("{id}")
+    @PostMapping("update/{id}")
     public ResponseEntity<Object> update(@Valid @RequestBody StudentUpdateRequest studentUpdateRequest, @PathVariable Long id,
                                          HttpServletRequest request) throws SistemaAcademicoException {
         String profileCredential = getProfile(request);
@@ -60,7 +63,7 @@ public class StudentController extends BaseController {
         throw new SistemaAcademicoException("");
     }
 
-    @PutMapping("lock/{id}")
+    @PostMapping("lock/{id}")
     public ResponseEntity<Object> lock(@PathVariable Long id,
                                          HttpServletRequest request) throws SistemaAcademicoException {
         String profileCredential = getProfile(request);
@@ -80,13 +83,12 @@ public class StudentController extends BaseController {
             throw new SistemaAcademicoException("Usuário de perfil estudante não ter permissão para trancar matrícula outro estudante");
         } else if (profileCredential.equals(UserProfile.SECRETARY.name())) {
             //TODO: perfil secretaria
-            throw new SistemaAcademicoException("");
+            throw new ForbiddenException();
         }
-        //TODO: UNAUTHORIZED
-        throw new SistemaAcademicoException("");
+        throw new ForbiddenException();
     }
 
-    @PutMapping("renew/{id}")
+    @PostMapping("renew/{id}")
     public ResponseEntity<Object> renew(@PathVariable Long id,
                                        HttpServletRequest request) throws SistemaAcademicoException {
         String profileCredential = getProfile(request);
@@ -105,8 +107,23 @@ public class StudentController extends BaseController {
             }
             throw new SistemaAcademicoException("Usuário de perfil estudante não ter permissão para renovar matrícula outro estudante");
         }
-        //TODO: UNAUTHORIZED
-        throw new SistemaAcademicoException("");
+        throw new ForbiddenException();
+    }
+
+    @GetMapping("user/{systemUserId}")
+    public ResponseEntity<Object> getStudentByUserId(@PathVariable Long systemUserId, HttpServletRequest request){
+        String profileCredential = getProfile(request);
+        if (profileCredential.equals(UserProfile.STUDENT.name())) {
+            Integer userId = getId(request);
+            Optional<SystemUserEntity> systemUserEntity = systemUserService.findById(userId.longValue());
+            StudentEntity studentEntity = service.findBySystemUser(systemUserEntity.get());
+            if (studentEntity.getId().equals(systemUserId)) {
+                ModelMapper mapper = new ModelMapper();
+                StudentConsultResponse student = mapper.map(studentEntity, StudentConsultResponse.class);
+                return ResponseEntity.ok(student);
+            }
+        }
+        throw new ForbiddenException();
     }
 
 

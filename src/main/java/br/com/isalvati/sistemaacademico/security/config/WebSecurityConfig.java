@@ -18,10 +18,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * Classe de configuracao do Security
- *
  */
 @Configuration
 @EnableWebSecurity
@@ -36,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * usado para retornar a senha criptografada
+     *
      * @param authenticationManagerBuilder
      * @throws Exception
      */
@@ -51,6 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * Utilizado para filtrar as requisicoes
+     *
      * @return
      * @throws Exception
      */
@@ -62,6 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * Chama o metodo de autenticacao da superclasse
      * Adicionei para funcionar
+     *
      * @return
      * @throws Exception
      */
@@ -74,6 +82,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * Responsavel por Configurar as urls autenticaveis ou nao
      * Url de login liberada
+     *
      * @param httpSecurity
      * @throws Exception
      */
@@ -81,18 +90,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll().and().authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll().and().authorizeRequests()
                 .antMatchers("/auth/*", "/token", "/actuator/*", "/student/register").permitAll().anyRequest().authenticated();
         httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
         httpSecurity.headers().cacheControl();
     }
 
-// INVALID CORS REQUEST
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-//        return source;
-//    }
+    // INVALID CORS REQUEST
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        return source;
+    }
 
 }

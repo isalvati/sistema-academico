@@ -34,4 +34,6 @@ public class ExceptionHandlers extends DefaultHandlerExceptionResolver {
         response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
 
+
+
 }
