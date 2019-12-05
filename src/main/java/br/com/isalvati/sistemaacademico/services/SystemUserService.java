@@ -8,6 +8,8 @@ import br.com.isalvati.sistemaacademico.type.UserProfile;
 import br.com.isalvati.sistemaacademico.util.BaseService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class SystemUserService extends BaseService<SystemUserEntity> {
 
@@ -19,6 +21,10 @@ public class SystemUserService extends BaseService<SystemUserEntity> {
 
     public SystemUserEntity findByUsername(String username) {
         return systemUserRepository.findByUsername(username);
+    }
+
+    public Optional<SystemUserEntity> findById(Long id) {
+        return systemUserRepository.findById(id);
     }
 
     public SystemUserEntity buildSystemUser(String username, UserProfile profile, String password) {

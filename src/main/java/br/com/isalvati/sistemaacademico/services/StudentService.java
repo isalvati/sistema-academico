@@ -40,4 +40,15 @@ public class StudentService extends BaseService<StudentEntity> {
         studentRegisterResponse.setPassword(DEFAULT_REGISTER_PASSWORD);
         return studentRegisterResponse;
     }
+
+    public StudentEntity findBySystemUser(SystemUserEntity systemUser) {
+        try {
+            StudentEntity studentEntity = this.studentRepository.findBySystemUser(systemUser);
+            return studentEntity;
+        } catch (Exception e) {
+            throw e;
+        }
+
+
+    }
 }
