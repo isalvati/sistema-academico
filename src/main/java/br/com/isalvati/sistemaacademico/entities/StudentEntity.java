@@ -31,6 +31,12 @@ public class StudentEntity extends BaseEntity {
     @Column(name = "course", nullable = false)
     private String course;
 
+    @Column(name = "renewed", nullable = false)
+    private Boolean renewed = false;
+
+    @Column(name = "locked", nullable = false)
+    private Boolean locked = false;
+
     @OneToOne(fetch = FetchType.EAGER)
     private SystemUserEntity systemUser;
 
@@ -108,6 +114,22 @@ public class StudentEntity extends BaseEntity {
         this.systemUser = systemUser;
     }
 
+    public Boolean getRenewed() {
+        return renewed;
+    }
+
+    public void setRenewed(Boolean renewed) {
+        this.renewed = renewed;
+    }
+
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -122,12 +144,14 @@ public class StudentEntity extends BaseEntity {
                 Objects.equals(phone, that.phone) &&
                 Objects.equals(address, that.address) &&
                 Objects.equals(course, that.course) &&
+                Objects.equals(renewed, that.renewed) &&
+                Objects.equals(locked, that.locked) &&
                 Objects.equals(systemUser, that.systemUser);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), id, name, document, birthdate, email, phone, address, course, systemUser);
+        return Objects.hash(super.hashCode(), id, name, document, birthdate, email, phone, address, course, renewed, locked, systemUser);
     }
 
     @Override
@@ -141,6 +165,8 @@ public class StudentEntity extends BaseEntity {
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 ", course='" + course + '\'' +
+                ", renewed=" + renewed +
+                ", locked=" + locked +
                 ", systemUser=" + systemUser +
                 '}';
     }

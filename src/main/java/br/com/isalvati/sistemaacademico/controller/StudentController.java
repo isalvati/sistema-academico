@@ -28,8 +28,7 @@ public class StudentController extends BaseController {
     private SystemUserService systemUserService;
 
     @PostMapping("register")
-    public ResponseEntity<Object> registerStudent(@Valid @RequestBody StudentRequest studentRequest,
-                                                  HttpServletRequest request) throws SistemaAcademicoException {
+    public ResponseEntity<Object> registerStudent(@Valid @RequestBody StudentRequest studentRequest) throws SistemaAcademicoException {
         StudentRegisterResponse response = service.registerStudent(studentRequest);
         return ResponseEntity.ok(response);
     }
@@ -43,11 +42,11 @@ public class StudentController extends BaseController {
             try {
                 Optional<SystemUserEntity> systemUserEntity = systemUserService.findById(userId.longValue());
                 StudentEntity studentEntity = service.findBySystemUser(systemUserEntity.get());
-                if (studentEntity.getId() == id) {
+                if (studentEntity.getId().equals(id)) {
                     studentEntity.setAddress(studentUpdateRequest.getAddress());
                     studentEntity.setPhone(studentUpdateRequest.getPhone());
                     service.save(studentEntity);
-                    return ResponseEntity.ok("{ \"success\":\"true\"}");
+                    return ResponseEntity.ok("{\"success\":\"true\"}");
                 }
             } catch (Exception e){
                 throw e;
@@ -57,8 +56,58 @@ public class StudentController extends BaseController {
             //TODO: perfil secretaria
             throw new SistemaAcademicoException("");
         }
+        //TODO: UNAUTHORIZED
         throw new SistemaAcademicoException("");
-
     }
+
+    @PutMapping("lock/{id}")
+    public ResponseEntity<Object> lock(@PathVariable Long id,
+                                         HttpServletRequest request) throws SistemaAcademicoException {
+        String profileCredential = getProfile(request);
+        if (profileCredential.equals(UserProfile.STUDENT.name())) {
+            Integer userId = getId(request);
+            try {
+                Optional<SystemUserEntity> systemUserEntity = systemUserService.findById(userId.longValue());
+                StudentEntity studentEntity = service.findBySystemUser(systemUserEntity.get());
+                if (studentEntity.getId().equals(id)) {
+                    studentEntity.setLocked(true);
+                    service.save(studentEntity);
+                    return ResponseEntity.ok("{\"success\":\"true\"}");
+                }
+            } catch (Exception e){
+                throw e;
+            }
+            throw new SistemaAcademicoException("Usuário de perfil estudante não ter permissão para trancar matrícula outro estudante");
+        } else if (profileCredential.equals(UserProfile.SECRETARY.name())) {
+            //TODO: perfil secretaria
+            throw new SistemaAcademicoException("");
+        }
+        //TODO: UNAUTHORIZED
+        throw new SistemaAcademicoException("");
+    }
+
+    @PutMapping("renew/{id}")
+    public ResponseEntity<Object> renew(@PathVariable Long id,
+                                       HttpServletRequest request) throws SistemaAcademicoException {
+        String profileCredential = getProfile(request);
+        if (profileCredential.equals(UserProfile.STUDENT.name())) {
+            Integer userId = getId(request);
+            try {
+                Optional<SystemUserEntity> systemUserEntity = systemUserService.findById(userId.longValue());
+                StudentEntity studentEntity = service.findBySystemUser(systemUserEntity.get());
+                if (studentEntity.getId().equals(id)) {
+                    studentEntity.setRenewed(true);
+                    service.save(studentEntity);
+                    return ResponseEntity.ok("{\"success\":\"true\"}");
+                }
+            } catch (Exception e){
+                throw e;
+            }
+            throw new SistemaAcademicoException("Usuário de perfil estudante não ter permissão para renovar matrícula outro estudante");
+        }
+        //TODO: UNAUTHORIZED
+        throw new SistemaAcademicoException("");
+    }
+
 
 }
