@@ -117,7 +117,7 @@ public class StudentController extends BaseController {
             Integer userId = getId(request);
             Optional<SystemUserEntity> systemUserEntity = systemUserService.findById(userId.longValue());
             StudentEntity studentEntity = service.findBySystemUser(systemUserEntity.get());
-            if (studentEntity.getId().equals(systemUserId)) {
+            if (studentEntity.getSystemUser().getId().equals(systemUserId)) {
                 ModelMapper mapper = new ModelMapper();
                 StudentConsultResponse student = mapper.map(studentEntity, StudentConsultResponse.class);
                 return ResponseEntity.ok(student);
